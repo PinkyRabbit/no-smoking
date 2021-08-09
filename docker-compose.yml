@@ -6,24 +6,22 @@ services:
     env_file:
       - .env
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_URL: mongodb-image:27017/db-name
     build:
       context: .
       target: base
     volumes:
       - ./app:/app/app
-    command: npm run start:dev
+    command: npm run start:debug
     restart: always
+    ports:
+      - '9999:9999'
     depends_on:
-      - db
-  db:
+      - mongodb-image
+  mongodb-image:
     container_name: no-smoking-mongo
     image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: unless-stopped
     ports:
       - '27017:27017'
       - '27018:27018'

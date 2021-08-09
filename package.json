@@ -1,5 +1,6 @@
 {
   "name": "no-smoking",
+  "description": "So you've decided to quit smoking? This is another web tool for it.",
   "author": "Mikita Melnikau <usesa@yandex.com>",
   "version": "1.0.0",
   "license": "MIT",
@@ -7,6 +8,7 @@
   "scripts": {
     "start": "NODE_ENV=production node /app/index.js",
     "start:dev": "NODE_ENV=development nodemon /app/index.js",
+    "start:debug": "NODE_ENV=development nodemon --inspect=0.0.0.0:9999 ./app/index.js",
     "lint": "eslint --color --ext .js *.* app",
     "lint:fix": "eslint --ext .js *.* app --fix"
   },

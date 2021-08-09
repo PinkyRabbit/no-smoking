@@ -3,4 +3,4 @@ WORKDIR /app
 COPY package.json ./
 COPY .env ./
 RUN npm install -s
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:debug"]
