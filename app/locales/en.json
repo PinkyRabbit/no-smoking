@@ -1,4 +1,5 @@
 {
+  "greetings": "greetings",
   "selectLocale": "Вы выбрали English язык",
-  "howToUse": "Инструкция на English"
+	"error_user_not_found": "Вы не инициированы. Не могу вас определить. Press on /start"
 }

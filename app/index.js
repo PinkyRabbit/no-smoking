@@ -1,8 +1,7 @@
-const path = require('path');
 const { Telegraf } = require('telegraf');
-const { I18n } = require('i18n');
 
 const { User, mongodbId } = require('./db');
+const { i18n, acceptedLocalesList } = require('./i18n');
 
 const { BOT_TOKEN } = process.env;
 
@@ -13,70 +12,47 @@ if (!BOT_TOKEN) {
 
 const bot = new Telegraf(BOT_TOKEN);
 
-const i18n = new I18n({
-  locales: ['en', 'ru'],
-  defaultLocale: 'en',
-  extension: '.json',
-  directory: path.join(__dirname, 'locales'),
-});
-
 // start
 bot.start(async (ctx) => {
   const { from } = ctx.message;
   const { id: chatId, language_code } = from;
+  let locale =
+    language_code && acceptedLocalesList.includes(language_code)
+    ? language_code
+    : 'en';
   const user = await User.findOne({ chatId });
-  let userId = user.id;
   if (!user) {
-    const newUser = await User.insert({
+    await User.insert({
       chatId,
       isFrozen: false,
       lastScore: 0,
       defectionTime: null,
-      locale: 'en',
+      locale,
     });
-    userId = newUser.id;
   }
-  if (language_code === 'ru') {
-    await User.update({ _id: userId }, { $set: { locale: 'ru' } });
-  }
-  const startMessage = [
-    'Welcome!',
-    'Please select your language.',
-    '🦊',
-    'Привет!',
-    'Выбери язык.',
-  ].join('\n');
-  ctx.reply(startMessage);
+  ctx.reply(i18n('greetings', locale));
 });
 
-// english
-bot.hears('English', async (ctx) => {
-  const locale = 'en';
+// locale
+async function switchLocale(ctx, locale) {
   const chatId = ctx.message.from.id;
   const user = await User.findOne({ chatId });
   if (!user) {
-    ctx.reply('dddd');
+    i18n('selectLocale', locale);
+    ctx.reply('error_user_not_found');
   }
   await User.update({ chatId }, { $set: { locale } });
-  ctx.reply(i18n.__({ phrase: 'selectLocale', locale }));
-  if (!user.lastScore) {
-    ctx.reply(i18n.__({ phrase: 'howToUse', locale }));
-  }
+  ctx.reply(i18n('selectLocale', locale));
+}
+
+// english
+bot.command('en', async (ctx) => {
+  await switchLocale(ctx, 'en');
 });
 
 // russian
-bot.hears('Русский', async (ctx) => {
-  const locale = 'ru';
-  const chatId = ctx.message.from.id;
-  const user = await User.findOne({ chatId });
-  if (!user) {
-    ctx.reply('dddd');
-  }
-  await User.update({ chatId }, { $set: { lang: 'ru' } });
-  ctx.reply(i18n.__({ phrase: 'selectLocale', locale }));
-  if (!user.lastScore) {
-    ctx.reply(i18n.__({ phrase: 'howToUse', locale }));
-  }
+bot.command('ru', async (ctx) => {
+  await switchLocale(ctx, 'ru');
 });
 
 bot.command('quit', (ctx) => {
