@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: no-smoking-bot
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    build:
+      context: .
+      target: base
+    volumes:
+      - ./app:/app/app
+    command: npm run start:dev
+    restart: always
+    depends_on:
+      - db
+  db:
+    container_name: no-smoking-mongo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - '27017:27017'
+      - '27018:27018'
