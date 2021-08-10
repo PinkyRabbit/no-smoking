@@ -1,4 +1,6 @@
-const Agenda = require("agenda");
+const Agenda = require('agenda');
+
+const { i18n } = require('./i18n');
 
 const { MONGO_URL } = process.env;
 
@@ -9,8 +11,17 @@ if (!MONGO_URL) {
 
 const agenda = new Agenda({ db: { address: MONGO_URL, collection: 'agenda-collection' } });
 
-function initAgenda() {
+function initAgenda({ telegram }) {
+  agenda.define('time_to_smoke',
+    {},
+    async (job) => {
+      const { chatId, locale } = job.attrs.data;
+      const message = i18n('time_to_smoke', locale);
+      telegram.sendMessage(chatId, message);
+    }
+  );
+
   return agenda.start();
 }
 
-module.exports = { initAgenda };
+module.exports = { agenda, initAgenda };
