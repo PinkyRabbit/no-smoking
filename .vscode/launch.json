@@ -13,7 +13,6 @@
       "trace": true,
       "protocol": "inspector",
       "skipFiles": [
-        "${workspaceRoot}/node_modules/**/*.js",
         "<node_internals>/**/*.js",
         "<eval>/*.*"
       ],

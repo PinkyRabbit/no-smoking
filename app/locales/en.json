@@ -1,5 +1,10 @@
 {
   "greetings": "greetings",
-  "selectLocale": "Вы выбрали English язык",
-	"error_user_not_found": "Вы не инициированы. Не могу вас определить. Press on /start"
+  "select_locale": "Вы выбрали English язык",
+	"error_user_not_found": "Вы не инициированы. Не могу вас определить. Press on /start",
+  "i_smoked": "I smoking 🚬",
+  "low_time": "Low time 🧬",
+  "high_time": "high_time 🧬",
+  "time_accounted": "time_accounted 🧬",
+  "next": "next"
 }

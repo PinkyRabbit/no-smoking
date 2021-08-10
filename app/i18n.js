@@ -7,14 +7,21 @@ const i18nInstance = new I18n({
   locales: acceptedLocalesList,
   defaultLocale: 'en',
   extension: '.json',
+  updateFiles: false,
+  syncFiles: false,
   directory: path.join(__dirname, 'locales'),
 });
 
-function i18n(phrase, locale = 'en') {
+function i18n(phrase, locale = 'en', args = {}) {
   if (!phrase) {
     throw new Error('You forgot to set phrase value for i18n helper function!');
   }
-  return i18nInstance.__({ phrase, locale });
+  return i18nInstance.__({ phrase, locale }, args);
 }
 
-module.exports = { i18n, acceptedLocalesList };
+const buttonsText = acceptedLocalesList.map((locale) => {
+  return i18nInstance.__({ phrase: 'i_smoked', locale });
+});
+buttonsText.push('ok');
+
+module.exports = { i18n, acceptedLocalesList, buttonsText };
