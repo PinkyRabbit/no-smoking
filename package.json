@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "app/index.js",
   "scripts": {
-    "start": "NODE_ENV=production node /app/index.js",
-    "start:dev": "NODE_ENV=development nodemon /app/index.js",
+    "start": "NODE_ENV=production node ./app/index.js",
+    "start:dev": "NODE_ENV=development nodemon ./app/index.js",
     "start:debug": "NODE_ENV=development nodemon --inspect=0.0.0.0:9999 ./app/index.js",
     "lint": "eslint --color --ext .js *.* app",
     "lint:fix": "eslint --ext .js *.* app --fix"

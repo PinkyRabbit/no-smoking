@@ -22,6 +22,8 @@ function initDatabase() {
 const options = {
   loggerLevel: 'error',
   useNewUrlParser: true,
+  retryWrites: true,
+  w: 'majority'
 };
 
 module.exports = {
