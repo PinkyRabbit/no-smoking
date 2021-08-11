@@ -9,6 +9,7 @@ if (!MONGO_URL) {
 
 function initDatabase() {
   return new Promise((resolve, reject) => {
+    console.log(MONGO_URL);
     monk(MONGO_URL)
       .then(() => {
         resolve();
