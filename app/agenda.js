@@ -2,7 +2,7 @@ const Agenda = require('agenda');
 
 const { i18n } = require('./i18n');
 
-const { MONGO_URL } = process.env;
+const { MONGO_URL, NODE_ENV } = process.env;
 
 if (!MONGO_URL) {
   console.log('No credentials for Agenda connection.');
