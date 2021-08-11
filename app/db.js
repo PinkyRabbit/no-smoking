@@ -1,16 +1,17 @@
 const monk = require('monk');
 
-const { MONGO_URL } = process.env;
+const { MONGO_URL, NODE_ENV } = process.env;
 
 if (!MONGO_URL) {
   console.log('No credentials for mongodb connection.');
   process.exit(1);
 }
+const url = NODE_ENV !== 'production' ? MONGO_URL : `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
 
 function initDatabase() {
   return new Promise((resolve, reject) => {
-    console.log(MONGO_URL);
-    monk(MONGO_URL)
+    console.log(url);
+    monk(url)
       .then(() => {
         resolve();
       })
@@ -29,5 +30,5 @@ const options = {
 module.exports = {
   initDatabase,
   mongodbId: (_id) => monk.id(_id),
-  User: monk(MONGO_URL, options).get('users'),
+  User: monk(url, options).get('users'),
 };

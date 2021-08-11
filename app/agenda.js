@@ -8,10 +8,11 @@ if (!MONGO_URL) {
   console.log('No credentials for Agenda connection.');
   process.exit(1);
 }
+const address = NODE_ENV !== 'production' ? MONGO_URL : `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
 
 const agenda = new Agenda({
   db: {
-    address: MONGO_URL,
+    address,
     collection: 'agenda-collection',
     options: {
       useNewUrlParser: true,
