@@ -10,7 +10,6 @@ const url = NODE_ENV !== 'production' ? MONGO_URL : `mongodb+srv://${MONGO_URL}?
 
 function initDatabase() {
   return new Promise((resolve, reject) => {
-    console.log(url);
     monk(url)
       .then(() => {
         resolve();
