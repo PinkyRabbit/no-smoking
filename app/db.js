@@ -22,6 +22,7 @@ function initDatabase() {
 const options = {
   loggerLevel: 'error',
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
 
 module.exports = {

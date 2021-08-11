@@ -9,7 +9,16 @@ if (!MONGO_URL) {
   process.exit(1);
 }
 
-const agenda = new Agenda({ db: { address: MONGO_URL, collection: 'agenda-collection' } });
+const agenda = new Agenda({
+  db: {
+    address: MONGO_URL,
+    collection: 'agenda-collection',
+    options: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  },
+});
 
 function initAgenda({ telegram }) {
   agenda.define('time_to_smoke',
