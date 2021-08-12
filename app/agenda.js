@@ -12,8 +12,6 @@ let address = MONGO_URL;
 if (`${MONGO_SRV}` === 'true') {
   address = `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
 }
-console.log(MONGO_SRV)
-console.log(address)
 
 const agenda = new Agenda({
   db: {
