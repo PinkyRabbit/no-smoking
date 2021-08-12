@@ -2,13 +2,18 @@ const Agenda = require('agenda');
 
 const { i18n } = require('./i18n');
 
-const { MONGO_URL, NODE_ENV } = process.env;
+const { MONGO_URL, MONGO_SRV } = process.env;
 
 if (!MONGO_URL) {
   console.log('No credentials for Agenda connection.');
   process.exit(1);
 }
-const address = NODE_ENV !== 'production' ? MONGO_URL : `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
+let address = MONGO_URL;
+if (`${MONGO_SRV}` === 'true') {
+  address = `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
+}
+console.log(MONGO_SRV)
+console.log(address)
 
 const agenda = new Agenda({
   db: {

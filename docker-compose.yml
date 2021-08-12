@@ -9,9 +9,11 @@ services:
       MONGO_URL: mongodb-image:27017/db-name
     build:
       context: .
-      target: base
+      target: development
     volumes:
       - ./app:/app/app
+      - ./.env:/app/.env
+    command: npm run start:debug
     command: npm run start:debug
     restart: always
     ports:

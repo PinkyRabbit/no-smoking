@@ -1,11 +1,22 @@
 const moment = require('moment');
 const { Markup: TgHelpers } = require('telegraf');
 
+const { User } = require('./db');
 const { i18n } = require('./i18n');
 
 const { NODE_ENV } = process.env;
 const minsOrSec = NODE_ENV === 'production' ? 'minutes': 'seconds';
-const lengthToDiff = NODE_ENV === 'production' ? 10: 2;
+const lengthToDiff = NODE_ENV === 'production' ? 15: 2;
+
+async function getUser(ctx) {
+  const { id: chatId, language_code } = ctx.message.from;
+  const user = await User.findOne({ chatId });
+  if (!user) {
+    const locale = language_code || 'en';
+    return ctx.reply(i18n('error_user_not_found', locale));
+  }
+  return user;
+}
 
 // keyboard
 function k(locale) {
@@ -66,4 +77,4 @@ function calculateDefectionTime(date, defectionTime, lastTimes) {
   return { message: 'time_accounted', minsToNext: average(lastTimes) };
 }
 
-module.exports = { k, switchLocale, calculateDefectionTime };
+module.exports = { getUser, k, switchLocale, calculateDefectionTime };
