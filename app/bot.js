@@ -49,10 +49,9 @@ function runBot() {
   async function iSmoked(ctx) {
     const user = await getUser(ctx);
     const date = new Date();
-    const { _id, defectionTime, lastTimes, locale } = user;
+    const { _id, chatId, defectionTime, lastTimes, locale } = user;
     const {
       message,
-      timesLeft,
       minsToNext,
     } = calculateDefectionTime(date, defectionTime, lastTimes);
 
@@ -60,9 +59,6 @@ function runBot() {
     await User.update({ _id }, { $set });
 
     let response = i18n(message, locale);
-    if (timesLeft) {
-      response += i18n('times_left', locale, { timesLeft });
-    }
     if (minsToNext) {
       const timer = `in ${minsToNext} ${minsOrSec}`;
       await agenda.cancel({ name: 'time_to_smoke', 'data.chatId': chatId });
@@ -76,12 +72,16 @@ function runBot() {
       response += i18n('next', locale, { nextTimeText });
     }
   
-    return ctx.reply(response);
+    return response;
   }
-  bot.command('ok', iSmoked);
   buttonsText.forEach((command) => {
-    bot.hears(command, iSmoked);
+    bot.hears(command, (ctx) => {
+      iSmoked(ctx).then((response) => ctx.reply(response));
+    });
   })
+  bot.command('smoking', (ctx) => {
+    iSmoked(ctx).then((response) => ctx.reply(response, Markup.removeKeyboard()));
+  });
 
   bot.command('skip', async (ctx) => {
     const { locale } = await getUser(ctx);
@@ -91,7 +91,7 @@ function runBot() {
 
   bot.command('faq', async (ctx) => {
     const { locale } = await getUser(ctx);
-    return ctx.replyWithMarkdown(i18n('faq', locale)); // @TODO: add markdown!!!
+    return ctx.replyWithMarkdown(i18n('faq', locale));
   });
 
   bot.command('quit', (ctx) => {

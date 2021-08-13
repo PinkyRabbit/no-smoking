@@ -44,37 +44,39 @@ function average(numArray) {
 }
 
 function calculateDefectionTime(date, defectionTime, lastTimes) {
+  let message = 'time_accounted_but_more_intervals_needed';
   if (!defectionTime) {
-    lastTimes = new Array();
-    return {
-      message: 'time_accounted',
-      shouldUpdateTime: true,
-      timesLeft: lengthToDiff,
-    };
+    return { message };
   }
   const from = moment(defectionTime);
   const to = moment(date);
   const diff = to.diff(from, minsOrSec);
-  if (diff < 10) {
-    return { message: 'low_time' };
-  }
-  if (lastTimes.length < lengthToDiff && diff > 180) {
-    return { message: 'high_time' };
-  }
+
   if (lastTimes.length < lengthToDiff) {
-    lastTimes.push(diff);
-    const timesLeft = lengthToDiff - lastTimes.length;
-    return { message: 'time_accounted', timesLeft };
+    const outOfMinimumTime = diff < 10;
+    const outOfMaximumTime = diff > 180;
+    if (!outOfMinimumTime && !outOfMaximumTime) {
+      lastTimes.push(diff);
+    }
+    return { message };
   }
+
+  message = 'time_accounted';
+
   const currentAverage = average(lastTimes);
-  if (diff - currentAverage > 120) {
-    return { message: 'high_time', minsToNext: currentAverage };
+  let minsToNext = currentAverage;
+
+  const outOfMinimumTime = diff < 10;
+  const outOfMaximumTime = diff - currentAverage > 120;
+
+  if (!outOfMinimumTime && !outOfMaximumTime) {
+    lastTimes.push(diff);
+    if (lastTimes.length > 20) {
+      lastTimes.shift();
+    }
+    minsToNext = average(lastTimes);
   }
-  lastTimes.push(diff);
-  if (lastTimes.length > lengthToDiff * 2) {
-    lastTimes.shift();
-  }
-  return { message: 'time_accounted', minsToNext: average(lastTimes) };
+  return { message, minsToNext };
 }
 
 module.exports = { getUser, k, switchLocale, calculateDefectionTime };
