@@ -9,7 +9,7 @@ if (!MONGO_URL) {
   process.exit(1);
 }
 let address = MONGO_URL;
-if (`${MONGO_SRV}`.replace(/\"/g, '') === 'true') {
+if (`${MONGO_SRV}` === 'ok') {
   address = `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
 }
 
