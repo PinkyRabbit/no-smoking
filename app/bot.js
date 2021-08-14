@@ -8,6 +8,9 @@ const { agenda } = require('./agenda');
 const { BOT_TOKEN, NODE_ENV } = process.env;
 const minsOrSec = NODE_ENV === 'production' ? 'minutes': 'seconds';
 
+console.log(`NODE_ENV = ${NODE_ENV}`);
+console.log(`BOT_TOKEN = ${BOT_TOKEN}`);
+
 function runBot() {
   if (!BOT_TOKEN) {
     console.log('No token for telegram bot was provided.')
