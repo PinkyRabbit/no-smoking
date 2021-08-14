@@ -8,10 +8,10 @@ if (!MONGO_URL) {
   console.log('No credentials for Agenda connection.');
   process.exit(1);
 }
-let address = MONGO_URL;
-if (`${MONGO_SRV}` === 'ok') {
-  address = `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`;
-}
+const address =
+  MONGO_SRV === 'ok'
+    ? `mongodb+srv://${MONGO_URL}?retryWrites=true&w=majority`
+    : MONGO_URL;
 
 const agenda = new Agenda({
   db: {
