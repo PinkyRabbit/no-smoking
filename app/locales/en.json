@@ -1,5 +1,5 @@
 {
-  "greetings": "greetings",
+  "greetings": "English locale still in developing. Please press /ru to switch on russian and /start or /faq to get start information",
   "select_locale": "Вы выбрали English язык",
 	"error_user_not_found": "Вы не инициированы. Не могу вас определить. Press on /start",
   "i_smoked": "I smoking 🚬",
