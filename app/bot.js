@@ -97,7 +97,10 @@ function runBot() {
     return ctx.replyWithMarkdown(i18n('faq', locale));
   });
 
-  bot.command('quit', (ctx) => {
+  bot.command('quit', async (ctx) => {
+    const { _id } = await getUser(ctx);
+    const $set = { defectionTime: null, lastTimes: [] };
+    await User.update({ _id }, { $set });
     ctx.telegram.leaveChat(ctx.message.chat.id);
     ctx.leaveChat();
   });
