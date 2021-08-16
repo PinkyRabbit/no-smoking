@@ -87,7 +87,7 @@ function runBot() {
   });
 
   bot.command('skip', async (ctx) => {
-    const { locale } = await getUser(ctx);
+    const { locale, chatId } = await getUser(ctx);
     await agenda.cancel({ name: 'time_to_smoke', 'data.chatId': chatId });
     return ctx.reply(i18n('dont_disturb', locale));
   });
