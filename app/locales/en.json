@@ -1,12 +1,14 @@
 {
-  "greetings": "English locale still in developing. Please press /ru to switch on russian and /start or /faq to get start information",
-  "select_locale": "Вы выбрали English язык",
-	"error_user_not_found": "Вы не инициированы. Не могу вас определить. Press on /start",
-  "i_smoked": "I smoking 🚬",
-  "low_time": "Low time 🧬",
-  "high_time": "high_time 🧬",
-  "times_left": "times_left",
-  "time_accounted": "time_accounted 🧬",
-  "next": "next",
-  "time_to_smoke": "🔥 time_to_smoke! 🔥"
+	"greetings": "Hi! This bot is needed to quit smoking. The idea is simple - press a button \"I smoke\" when smoking, bot records the time and then calculates the interval between smoke breaks. Usually, one and a half pack of cigarettes are enough for the bot to display the smoking schedule - sometimes even faster.\nFind out how to use the bot more efficiently pressing the button /faq\n\nDo not forget to press the button on your next smoke break.",
+  "faq": "Supported locales:\n/en /ru\n\nFrequently Asked Questions\n\nQ: *How to remove the button?*\nA: You need to press /smoking To bring it back - switch the language.\n\nQ: *What's the point of a bot?*\nA: You control yourself on your own. Firstly, the bot records the intervals between smoke breaks, and then shows you when your next smoke break comes. If you limit yourself even for a minute, you even won't notice when you'll quit smoking.\n\nQ: *So you need to smoke on a strict schedule?*\nA: No. You can smoke whenever you want. Only don't forget to press the button. The idea is that you limit yourself whenever you want it.\n\nQ: *Do I need  to smoke after the bot allows it?*\nA: Of course not. The bot simply tells you how often you smoke. You can smoke without waiting for a command from the bot. Only don't forget to press the button.\n\nQ: *I forgot to press the button*\nA: The most effective is to press the button the moment you start smoking. But, if you missed - it's not fatal. Click when remember. It's better than not pressing - time will not be recorded.\n\nQ: *How can I help the project?*\nA: You can help with translations. Suggest your translations here: https://github.com/PinkyRabbit/no-smoking/tree/master/app/locales If something is not clear  - ask me.\nAlso, project hosting is not free. Any of your support  would be helpful. Knock on my telegram with any of your ideas https://t.me/PinkyaRabbit",
+  "select_locale": "You select English locale 🇬🇧",
+	"error_user_not_found": "You are not initiated. I can't identify you. Click on / start",
+  "i_smoked": "I'm smoking now 🚬",
+  "time_accounted": "🧬 Time has been tracked 🧬",
+  "time_accounted_but_more_intervals_needed": "🧬 Time has been tracked 🧬\n\nThe bot builds your smoking schedule.\nKeep using.",
+  "hours": " {{hours}} h",
+  "mins": " {{mins}} min",
+  "next": "\n\n⏱ Until the next smoke break {{nextTimeText}}.\nI will remind you about it.\nIf you don't need to be reminded, press /skip",
+  "time_to_smoke": "🔥 Time for a smoke break! 🔥",
+  "dont_disturb": "🤷‍♂️ If you don't want to - I won't remind. Just press the button when you'll smoke."
 }

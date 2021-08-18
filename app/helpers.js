@@ -31,11 +31,11 @@ async function switchLocale(ctx, locale) {
   const chatId = ctx.message.from.id;
   const user = await User.findOne({ chatId });
   if (!user) {
-    i18n('selectLocale', locale);
+    i18n('select_locale', locale);
     ctx.reply('error_user_not_found');
   }
   await User.update({ chatId }, { $set: { locale } });
-  ctx.reply(i18n('selectLocale', locale), k(locale));
+  ctx.reply(i18n('select_locale', locale), k(locale));
 }
 
 function average(numArray) {

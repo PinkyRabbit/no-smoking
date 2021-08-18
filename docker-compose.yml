@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   api:
@@ -14,10 +14,9 @@ services:
       - ./app:/app/app
       - ./.env:/app/.env
     command: npm run start:debug
-    command: npm run start:debug
     restart: always
     ports:
-      - '9999:9999'
+      - "9999:9999"
     depends_on:
       - mongodb-image
   mongodb-image:
@@ -25,5 +24,5 @@ services:
     image: mongo
     restart: unless-stopped
     ports:
-      - '27017:27017'
-      - '27018:27018'
+      - "27017:27017"
+      - "27018:27018"
