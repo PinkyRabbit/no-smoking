@@ -96,6 +96,13 @@ function runBot() {
     const { locale } = await getUser(ctx);
     return ctx.replyWithMarkdown(i18n('faq', locale));
   });
+  bot.hears('0', async (ctx) => {
+    const { _id, locale, chatId } = await getUser(ctx);
+    await agenda.cancel({ name: 'time_to_smoke', 'data.chatId': chatId });
+    const $set = { defectionTime: null, lastTimes: [] };
+    await User.update({ _id }, { $set });
+    return ctx.reply(i18n('reset', locale));
+  });
 
   bot.command('quit', async (ctx) => {
     const { _id } = await getUser(ctx);
